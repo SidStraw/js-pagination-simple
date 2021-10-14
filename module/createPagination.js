@@ -17,7 +17,10 @@ export default function createPagination({ pagesLength = 1, currentPage = 1, onC
   const getPages = () => {
     const currentRange = Array(10)
       .fill(0)
-      .map((val, index) => ({ action: setPage, value: index + currentPage - 5 }))
+      .map((val, index) => {
+        const value = index + currentPage - 5
+        return { isActive: value === currentPage, action: 'setPage', value }
+      })
       .filter(({ value }) => {
         if (currentPage < 1 + 2 && value > currentPage + 2) return false
         if (currentPage < pagesLength - 2 && value < currentPage - 2) return false
@@ -27,7 +30,7 @@ export default function createPagination({ pagesLength = 1, currentPage = 1, onC
     const firstOption = currentRange.some(({ value }) => value === 1)
       ? []
       : [
-          { action: setPage, value: 1 },
+          { action: 'setPage', value: 1 },
           { action: null, value: '...' },
         ]
 
@@ -35,12 +38,12 @@ export default function createPagination({ pagesLength = 1, currentPage = 1, onC
       ? []
       : [
           { action: null, value: '...' },
-          { action: setPage, value: pagesLength },
+          { action: 'setPage', value: pagesLength },
         ]
 
-    const previousPageOption = currentPage === 1 ? [] : [{ action: previousPage, value: 'Prev' }]
+    const previousPageOption = currentPage === 1 ? [] : [{ action: 'previousPage', value: 'Prev' }]
 
-    const nextPageOption = currentPage === pagesLength ? [] : [{ action: nextPage, value: 'Next' }]
+    const nextPageOption = currentPage === pagesLength ? [] : [{ action: 'nextPage', value: 'Next' }]
 
     return {
       currentPage: currentPage,
