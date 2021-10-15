@@ -2,7 +2,7 @@ const PAGE_OPTIONS = {}
 
 export default function createPagination({ pagesLength = 1, currentPage = 1, onChange }) {
   const setPage = n => {
-    currentPage = n
+    currentPage = Number(n)
     const pages = getPages()
     typeof onChange === 'function' && onChange(pages)
     return pages
@@ -15,42 +15,44 @@ export default function createPagination({ pagesLength = 1, currentPage = 1, onC
   }
 
   const getPages = () => {
-    const currentRange = Array(10)
-      .fill(0)
+    const startNumber = (() => {
+      if (currentPage - 2 <= 0) return 1
+      const overNumber = currentPage + 2 - pagesLength
+      if (overNumber > 0) return currentPage - 2 - overNumber
+      return currentPage - 2
+    })()
+
+    const currentRange = Array(5)
+      .fill(startNumber)
       .map((val, index) => {
-        const value = index + currentPage - 5
+        const value = val + index
         return { isActive: value === currentPage, action: 'setPage', value }
-      })
-      .filter(({ value }) => {
-        if (currentPage < 1 + 2 && value > currentPage + 2) return false
-        if (currentPage < pagesLength - 2 && value < currentPage - 2) return false
-        return value > 0 && value <= pagesLength
       })
 
     const firstOption = currentRange.some(({ value }) => value === 1)
       ? []
-      : [
-          { action: 'setPage', value: 1 },
-          { action: null, value: '...' },
-        ]
+      : [{ action: 'setPage', value: 1 }]
 
     const endOption = currentRange.some(({ value }) => value === pagesLength)
       ? []
-      : [
-          { action: null, value: '...' },
-          { action: 'setPage', value: pagesLength },
-        ]
+      : [{ action: 'setPage', value: pagesLength }]
 
     const previousPageOption = currentPage === 1 ? [] : [{ action: 'previousPage', value: 'Prev' }]
 
-    const nextPageOption = currentPage === pagesLength ? [] : [{ action: 'nextPage', value: 'Next' }]
+    const nextPageOption =
+      currentPage === pagesLength ? [] : [{ action: 'nextPage', value: 'Next' }]
+
+    const getMoreOptions = bool => (bool ? [{ action: null, value: '...' }] : [])
+    const currentRangeValue = Array.from(currentRange, ({ value }) => value)
 
     return {
       currentPage: currentPage,
       pages: [
         ...previousPageOption,
         ...firstOption,
+        ...getMoreOptions(Math.min(...currentRangeValue) > 1 + 1),
         ...currentRange,
+        ...getMoreOptions(Math.max(...currentRangeValue) < pagesLength - 1),
         ...endOption,
         ...nextPageOption,
       ],
