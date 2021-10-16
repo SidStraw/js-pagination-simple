@@ -9,44 +9,54 @@
     <meta name="description" content="">
 
     <!-- Tailwind -->
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" crossorigin="anonymous" >
-    <script type="module" src="./simple_1.js" defer></script>
+    <script src="https://cdn-tailwindcss.vercel.app/"></script>
+    <script type="module" src="./simple_1.js"></script>
 </head>
 <body class="bg-white font-family-karla">
+
     <!-- Text Header -->
     <header class="w-full container mx-auto">
         <div class="flex flex-col items-center py-12">
-            <a class="font-bold text-gray-800 hover:text-gray-700 text-5xl" href="#">
-                如何使用 JavaScript 製作分頁效果
+            <a href="#">
+                <h1 class="font-bold text-gray-800 hover:text-gray-700 text-5xl">
+                    如何使用 JavaScript 製作分頁效果
+                </h1>
             </a>
-            <p class="text-lg text-gray-600 mt-3">
+
+            <a class="text-lg text-gray-600 mt-3" href="https://github.com/SidStraw">
                 這可要好好管管 - Sid
-            </p>
+            </a>
         </div>
     </header>
 
-    <div class="container mx-auto flex flex-wrap py-6">
+    <main class="container mx-auto py-6 flex flex-col items-center">
 
         <!-- Info Section -->
-        <section id="info" class="w-full flex px-3 flex-wrap justify-between">
+        <div id="info" class="grid grid-cols-4 px-3">
 
-            <!-- <article class="flex flex-col shadow m-4 max-w-xs">
-                <img src="https://source.unsplash.com/collection/1346951/400x200?sig=1" alt="" />
-                <div class="bg-white flex flex-col justify-start p-6">
-                    <p href="#" class="text-blue-700 text-sm font-bold uppercase pb-4">ServiceType</a>
-                    <p href="#" class="text-3xl font-bold hover:text-gray-700 pb-4">StationName.Zh_tw</a>
-                    <p href="#" class="uppercase text-gray-800 hover:text-black">站點最大車數：BikesCapacity<i class="fas fa-arrow-right"></i></a>
-                    <p href="#" class="text-sm pb-3">StationAddress.Zh_tw</p>
-                </div>
-            </article> -->
-            
-            
-        </section>
+            <!-- 
+                <article class="flex flex-col shadow m-4 max-w-xs">
+                    <img src="https://source.unsplash.com/collection/1346951/400x200?sig=${key}" alt="" />
+                    <div class="bg-white flex flex-col justify-start p-6">
+                        <p class="text-blue-700 text-sm font-bold uppercase pb-4">${ServiceType}</p>
+                        <h2 class="text-3xl font-bold hover:text-gray-700 pb-4">${StationName?.Zh_tw}</h2>
+                        <p class="uppercase text-gray-800 hover:text-black">站點最大車數： ${BikesCapacity}</p>
+                        <p class="text-sm pb-3">${StationAddress?.Zh_tw}</p>
+                    </div>
+                </article>
+            -->
+        </div>
+
         <!-- Pagination -->
-        <div id="pagination" class="flex items-center py-8 mx-auto">
+        <nav 
+            aria-label="Pagination Navigation"
+            id="pagination" 
+            class="flex items-center py-8 mx-auto"
+        >
             <!-- <a href="#" class="h-10 w-10 bg-blue-800 hover:bg-blue-600 font-semibold text-white text-sm flex items-center justify-center">1</a>
             <a href="#" class="h-10 w-10 font-semibold text-gray-800 hover:bg-blue-600 hover:text-white text-sm flex items-center justify-center">2</a>
             <a href="#" class="h-10 w-10 font-semibold text-gray-800 hover:text-gray-900 text-sm flex items-center justify-center ml-3">Next <i class="fas fa-arrow-right ml-2"></i></a> -->
-        </div>
+        </nav>
+    </main>
 </body>
 </html>
