@@ -3,6 +3,8 @@ import createPagination from './module/createPagination.js'
 import getTdxApi from './module/service.js'
 
 async function main() {
+  const PAGE_ITEM_QUANTITY = 10
+
   const tdxRes = await getTdxApi()
   // console.log(tdxRes)
 
@@ -12,8 +14,12 @@ async function main() {
   const updateInfo = renderFunction(infoElement, createCard)
   const updatePagination = renderFunction(paginationElement, createPaginationItem)
 
+  const pagesLength =
+    tdxRes.length % PAGE_ITEM_QUANTITY === 0
+      ? tdxRes.length / PAGE_ITEM_QUANTITY
+      : Math.trunc(tdxRes.length / PAGE_ITEM_QUANTITY) + 1
   const pagination = createPagination({
-    pagesLength: 15,
+    pagesLength,
     currentPage: 1,
     onChange: onChangeHeader,
   })
@@ -21,7 +27,8 @@ async function main() {
   function onChangeHeader() {
     const { currentPage, pages } = pagination.getPages()
     console.log({ currentPage, pages })
-    updateInfo(tdxRes.slice(0, 5))
+    const currentIndex = (currentPage - 1) * PAGE_ITEM_QUANTITY
+    updateInfo(tdxRes.slice(currentIndex, currentIndex + PAGE_ITEM_QUANTITY))
     updatePagination(pages)
   }
 
@@ -32,7 +39,7 @@ async function main() {
     pagination[action](Number(value))
   })
 
-  updatePagination(pagination.getPages().pages)
+  onChangeHeader()
 }
 
 main()
