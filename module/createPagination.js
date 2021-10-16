@@ -1,5 +1,3 @@
-const PAGE_OPTIONS = {}
-
 export default function createPagination({ pagesLength = 1, currentPage = 1, onChange }) {
   const setPage = n => {
     currentPage = Number(n)

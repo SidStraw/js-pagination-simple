@@ -6,7 +6,6 @@ async function main() {
   const PAGE_ITEM_QUANTITY = 10
 
   const tdxRes = await getTdxApi()
-  // console.log(tdxRes)
 
   const infoElement = document.querySelector('#info')
   const paginationElement = document.querySelector('#pagination')
@@ -26,7 +25,6 @@ async function main() {
 
   function onChangeHeader() {
     const { currentPage, pages } = pagination.getPages()
-    console.log({ currentPage, pages })
     const currentIndex = (currentPage - 1) * PAGE_ITEM_QUANTITY
     updateInfo(tdxRes.slice(currentIndex, currentIndex + PAGE_ITEM_QUANTITY))
     updatePagination(pages)
@@ -35,7 +33,6 @@ async function main() {
   paginationElement.addEventListener('click', e => {
     const { action, value } = e.target.dataset
     if (!action) return
-    console.log(e.target, { action, value })
     pagination[action](Number(value))
   })
 
