@@ -23,20 +23,33 @@ async function main() {
     onChange: onChangeHeader,
   })
 
-  function onChangeHeader() {
-    const { currentPage, pages } = pagination.getPages()
+  function updateElements({ currentPage, pages }) {
     const currentIndex = (currentPage - 1) * PAGE_ITEM_QUANTITY
     updateInfo(tdxRes.slice(currentIndex, currentIndex + PAGE_ITEM_QUANTITY))
     updatePagination(pages)
   }
 
+  function onChangeHeader({ currentPage, pages }) {
+    updateElements({ currentPage, pages })
+
+    if (currentPage === 1) return history.pushState({ page: 1 }, '', '/')
+    history.pushState({ page: pages }, '', '/?page=' + currentPage)
+  }
+
   paginationElement.addEventListener('click', e => {
     const { action, value } = e.target.dataset
     if (!action) return
-    pagination[action](Number(value))
+    pagination[action](value)
   })
 
-  onChangeHeader()
+  window.addEventListener('popstate', ({ state }) => {
+    const { page = 1 } = state || {}
+    updateElements(pagination.setPage(page))
+  })
+
+  const url = new URL(window.location.href)
+  const pageParams = url.searchParams.get('page') || 1
+  updateElements(pagination.setPage(pageParams))
 }
 
 main()
