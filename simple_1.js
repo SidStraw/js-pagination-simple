@@ -31,15 +31,19 @@ async function main() {
 
   function onChangeHeader({ currentPage, pages }) {
     updateElements({ currentPage, pages })
-
-    if (currentPage === 1) return history.pushState({ page: 1 }, '', '/')
-    history.pushState({ page: pages }, '', '/?page=' + currentPage)
   }
 
   paginationElement.addEventListener('click', e => {
     const { action, value } = e.target.dataset
-    if (!action) return
-    pagination[action](value)
+    const newPage = Number(value)
+    const currentPage = pagination.getCurrentPage()
+
+    if (!action || currentPage === newPage) return
+
+    pagination[action](newPage)
+
+    if (newPage === 1) return history.pushState({ page: 1 }, '', '/')
+    history.pushState({ page: newPage }, '', '/?page=' + newPage)
   })
 
   window.addEventListener('popstate', ({ state }) => {
