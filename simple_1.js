@@ -1,11 +1,11 @@
 import { renderFunction, createCard, createPaginationItem } from './module/createElements.js'
 import createPagination from './module/createPagination.js'
-import getTdxApi from './module/service.js'
+import getBikeApi from './module/service.js'
 
 async function main() {
   const PAGE_ITEM_QUANTITY = 10
 
-  const tdxRes = await getTdxApi()
+  const tdxRes = await getBikeApi()
 
   const infoElement = document.querySelector('#info')
   const paginationElement = document.querySelector('#pagination')
