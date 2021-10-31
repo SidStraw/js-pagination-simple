@@ -1,11 +1,11 @@
 import { renderFunction, createCard, createPaginationItem } from './module/createElements.js'
 import createPagination from './module/createPagination.js'
-import getBikeApi from './module/service.js'
+import { getParkingApi } from './module/service.js'
 
 async function main() {
   const PAGE_ITEM_QUANTITY = 10
 
-  const tdxRes = await getBikeApi()
+  const { CarParks } = await getParkingApi()
 
   const infoElement = document.querySelector('#info')
   const paginationElement = document.querySelector('#pagination')
@@ -14,9 +14,9 @@ async function main() {
   const updatePagination = renderFunction(paginationElement, createPaginationItem)
 
   const pagesLength =
-    tdxRes.length % PAGE_ITEM_QUANTITY === 0
-      ? tdxRes.length / PAGE_ITEM_QUANTITY
-      : Math.trunc(tdxRes.length / PAGE_ITEM_QUANTITY) + 1
+    CarParks.length % PAGE_ITEM_QUANTITY === 0
+      ? CarParks.length / PAGE_ITEM_QUANTITY
+      : Math.trunc(CarParks.length / PAGE_ITEM_QUANTITY) + 1
   const pagination = createPagination({
     pagesLength,
     currentPage: 1,
@@ -25,7 +25,7 @@ async function main() {
 
   function updateElements({ currentPage, pages }) {
     const currentIndex = (currentPage - 1) * PAGE_ITEM_QUANTITY
-    updateInfo(tdxRes.slice(currentIndex, currentIndex + PAGE_ITEM_QUANTITY))
+    updateInfo(CarParks.slice(currentIndex, currentIndex + PAGE_ITEM_QUANTITY))
     updatePagination(pages)
   }
 

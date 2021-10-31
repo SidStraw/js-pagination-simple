@@ -4,10 +4,15 @@ export function getBikeApi() {
   )
 }
 
-export function getParkingApi(pageNumber, pageCount) {
-  const skip = (pageNumber - 1) * pageCount
+export function getParkingApi(pageNumber = 1, pageCount) {
+  const skip = (pageNumber - 1) * pageCount || 0
+
+  const pageCountParams = `&$top=${pageCount}`
+  const skipParams = `&$skip=${skip}`
   return fetch(
-    `https://traffic.transportdata.tw/MOTC/v1/Parking/OffStreet/CarPark/City/Taipei?$top=${pageCount}&$skip=${skip}&$count=true&$format=JSON`
+    'https://traffic.transportdata.tw/MOTC/v1/Parking/OffStreet/CarPark/City/Taipei?$count=true&$format=JSON' +
+      (pageCount ? pageCountParams : '') +
+      (skip ? skipParams : '')
   ).then(res => res.json())
 }
 
