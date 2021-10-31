@@ -26,6 +26,7 @@ export default function createPagination({ pagesLength = 1, currentPage = 1, onC
         const value = val + index
         return { isActive: value === currentPage, action: 'setPage', value }
       })
+      .filter(({ value }) => value >= 1 && value <= pagesLength)
 
     const firstOption = currentRange.some(({ value }) => value === 1)
       ? []
