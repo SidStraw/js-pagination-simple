@@ -36,9 +36,9 @@ async function main() {
 
     if (!action || currentPage === newPage) return
 
-    pagination[action](newPage)
+    const { currentPage: newCurrentPage } = pagination[action](newPage)
 
-    history.pushState({ page: newPage }, '', '?page=' + newPage)
+    history.pushState({ page: newPage }, '', '?page=' + newCurrentPage)
   })
 
   window.addEventListener('popstate', ({ state }) => {
