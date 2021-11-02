@@ -43,7 +43,7 @@ async function main() {
     pagination[action](newPage)
 
     if (newPage === 1) return history.pushState({ page: 1 }, '', '/')
-    history.pushState({ page: newPage }, '', '/?page=' + newPage)
+    history.pushState({ page: newPage }, '', '?page=' + newPage)
   })
 
   window.addEventListener('popstate', ({ state }) => {
