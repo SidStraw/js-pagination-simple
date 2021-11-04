@@ -1,10 +1,9 @@
-export function renderFunction(listDom, renderContent, contentData = []) {
-  if (contentData.length) listDom.innerHTML = updateElement([...contentData])
+export function renderFunction(bindDom, renderContent, contentData = []) {
+  if (contentData.length) bindDom.innerHTML = updateElement([...contentData])
 
   function updateElement(newData) {
-    if (newData === contentData) return
     contentData = newData
-    listDom.innerHTML = newData.map(renderContent).join('')
+    bindDom.innerHTML = newData.map(renderContent).join('')
   }
 
   return updateElement

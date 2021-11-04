@@ -10,7 +10,7 @@ async function main() {
   const infoElement = document.querySelector('#info')
   const paginationElement = document.querySelector('#pagination')
 
-  const updateInfo = renderFunction(infoElement, createCard)
+  const updateInfoCard = renderFunction(infoElement, createCard)
   const updatePagination = renderFunction(paginationElement, createPaginationItem)
 
   const pagesLength =
@@ -25,7 +25,7 @@ async function main() {
 
   async function updateElements({ currentPage, pages }) {
     const { CarParks } = await getParkingApi(currentPage, PAGE_ITEM_QUANTITY)
-    updateInfo(CarParks)
+    updateInfoCard(CarParks)
     updatePagination(pages)
   }
 
