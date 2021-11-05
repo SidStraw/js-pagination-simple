@@ -19,18 +19,13 @@ async function main() {
       : Math.trunc(CarParks.length / PAGE_ITEM_QUANTITY) + 1
   const pagination = createPagination({
     pagesLength,
-    currentPage: 1,
-    onChange: onChangeHeader,
+    onChange: updateElements,
   })
 
   function updateElements({ currentPage, pages }) {
     const currentIndex = (currentPage - 1) * PAGE_ITEM_QUANTITY
     updateInfoCard(CarParks.slice(currentIndex, currentIndex + PAGE_ITEM_QUANTITY))
     updatePagination(pages)
-  }
-
-  function onChangeHeader({ currentPage, pages }) {
-    updateElements({ currentPage, pages })
   }
 
   paginationElement.addEventListener('click', e => {
